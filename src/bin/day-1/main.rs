@@ -11,6 +11,11 @@ fn main() -> std::io::Result<()> {
     elves.most_calories()
   );
 
+  println!(
+    "The 3 elves carrying the most calories are carrying {} calories",
+    elves.calories_for_top_n_elves(3)
+  );
+
   Ok(())
 }
 
@@ -43,5 +48,11 @@ mod tests {
   fn part_one() {
     let elves = get_elves();
     assert_eq!(elves.most_calories(), 24000)
+  }
+
+  #[test]
+  fn part_two() {
+    let elves = get_elves();
+    assert_eq!(elves.calories_for_top_n_elves(3), 45000)
   }
 }

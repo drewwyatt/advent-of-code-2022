@@ -1,10 +1,30 @@
 use std::str::FromStr;
 
-#[derive(Debug)]
-pub enum AdventError {}
-
 pub struct Elves {
   elves: Vec<Elf>,
+}
+
+struct Stack {
+  data: Vec<i64>,
+}
+
+impl Stack {
+  pub fn new(size: usize) -> Self {
+    Stack {
+      data: vec![0; size],
+    }
+  }
+
+  pub fn add(&mut self, calories: i64) {
+    if &calories > self.data.first().unwrap() {
+      self.data[0] = calories;
+      self.data.sort();
+    }
+  }
+
+  pub fn sum(&self) -> i64 {
+    self.data.iter().sum()
+  }
 }
 
 impl Elves {
@@ -16,6 +36,15 @@ impl Elves {
         most
       }
     })
+  }
+
+  pub fn calories_for_top_n_elves(&self, n: usize) -> i64 {
+    let mut stack = Stack::new(n);
+    for elf in self.elves.iter() {
+      stack.add(elf.calories)
+    }
+
+    stack.sum()
   }
 }
 
