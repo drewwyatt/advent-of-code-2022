@@ -1,13 +1,23 @@
 mod models;
-use models::{Round, Tournament};
+use models::{Part1Round, Tournament};
+
+use crate::models::Part2Round;
 
 fn main() -> std::io::Result<()> {
-  let rounds = advent::read_input_for_day_as::<Round>(2)?;
-  let tournament = Tournament::new(rounds);
+  let part_one_rounds = advent::read_input_for_day_as::<Part1Round>(2)?;
+  let part_two_rounds = advent::read_input_for_day_as::<Part2Round>(2)?;
+
+  let part_1 = Tournament::part_1(part_one_rounds);
+  let part_2 = Tournament::part_2(part_two_rounds);
 
   println!(
     "[day-2][part-1] your total score would be: {}",
-    tournament.score()
+    part_1.score()
+  );
+
+  println!(
+    "[day-2][part-2] your total score would be: {}",
+    part_2.score()
   );
   Ok(())
 }
@@ -19,12 +29,12 @@ mod tests {
 
   fn get_tournament() -> Tournament {
     let rounds = vec![
-      Round::from_str("A Y").unwrap(),
-      Round::from_str("B X").unwrap(),
-      Round::from_str("C Z").unwrap(),
+      Part1Round::from_str("A Y").unwrap(),
+      Part1Round::from_str("B X").unwrap(),
+      Part1Round::from_str("C Z").unwrap(),
     ];
 
-    Tournament::new(rounds)
+    Tournament::part_1(rounds)
   }
 
   #[test]
