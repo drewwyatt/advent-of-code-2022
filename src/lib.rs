@@ -2,14 +2,17 @@ use regex::Captures;
 use std::fs;
 use std::str::FromStr;
 
-pub fn read_input_for_day<T>(day: usize) -> std::io::Result<Vec<T>>
+pub fn read_input_for_day(day: usize) -> std::io::Result<String> {
+  let path = format!("./src/bin/day-{}/INPUT.txt", day);
+  fs::read_to_string(path)
+}
+
+pub fn read_input_for_day_as<T>(day: usize) -> std::io::Result<Vec<T>>
 where
   T: FromStr,
   T::Err: std::fmt::Debug,
 {
-  let path = format!("./src/bin/day-{}/INPUT.txt", day);
-  let contents = fs::read_to_string(path)?;
-
+  let contents = read_input_for_day(day)?;
   let values = contents
     .lines()
     .map(|l| l.parse().unwrap())

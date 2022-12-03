@@ -1,15 +1,26 @@
 use std::str::FromStr;
 
-enum AdventError {
-  InvalidInput,
-}
+#[derive(Debug)]
+pub enum AdventError {}
 
 pub struct Elves {
   elves: Vec<Elf>,
 }
 
+impl Elves {
+  pub fn most_calories(&self) -> i64 {
+    self.elves.iter().fold(0, |most, next| {
+      if next.calories > most {
+        next.calories
+      } else {
+        most
+      }
+    })
+  }
+}
+
 impl FromStr for Elves {
-  type Err = AdventError;
+  type Err = std::io::Error;
 
   fn from_str(s: &str) -> Result<Self, Self::Err> {
     let data = s.lines().fold(vec![Elf::new()], |mut elves, line| {
@@ -17,7 +28,7 @@ impl FromStr for Elves {
         elves.push(Elf::new())
       } else {
         let calories = line.parse::<i64>().unwrap();
-        let elf = elves.last().as_mut().unwrap();
+        let elf = elves.last_mut().unwrap();
         elf.add(calories);
       }
 
