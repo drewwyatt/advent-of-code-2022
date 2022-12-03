@@ -45,13 +45,13 @@ mod tests {
   }
 
   #[test]
-  fn part_one() {
+  fn day_one_part_one() {
     let elves = get_elves();
     assert_eq!(elves.most_calories(), 24000)
   }
 
   #[test]
-  fn part_two() {
+  fn day_one_part_two() {
     let elves = get_elves();
     assert_eq!(elves.calories_for_top_n_elves(3), 45000)
   }
