@@ -22,7 +22,11 @@ mod tests {
   }
 
   #[test]
-  fn day_three_part_one() {}
+  fn day_three_part_one() {
+    let rucksacks = get_rucksacks();
+    let sum: usize = rucksacks.iter().map(|s| s.priority()).sum();
+    assert_eq!(sum, 157);
+  }
 
   #[test]
   fn priority() {

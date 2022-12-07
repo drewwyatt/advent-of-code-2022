@@ -6,13 +6,13 @@ pub enum AdventError {}
 pub struct Rucksack {
   left: Vec<Item>,
   right: Vec<Item>,
-  pub both: Vec<Item>,
+  both: Option<Item>,
 }
 
 impl Rucksack {
   pub fn new(items: String) -> Self {
     let halfway = items.len() / 2;
-    let mut both = vec![];
+    let mut both = None;
     let (left, right) = items
       .chars()
       .enumerate()
@@ -23,7 +23,7 @@ impl Rucksack {
           let item = Item::new(c);
           acc.1.push(item);
           if acc.0.contains(&item) {
-            both.push(item);
+            both = Some(item);
           }
         }
 
@@ -31,6 +31,10 @@ impl Rucksack {
       });
 
     Self { left, right, both }
+  }
+
+  pub fn priority(&self) -> usize {
+    self.both.map_or(0, |i| i.priority())
   }
 }
 
@@ -42,15 +46,9 @@ impl FromStr for Rucksack {
   }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct Item {
   pub id: char,
-}
-
-impl PartialEq for Item {
-  fn eq(&self, other: &Item) -> bool {
-    self.id == other.id
-  }
 }
 
 impl Item {
