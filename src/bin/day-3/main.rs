@@ -1,7 +1,13 @@
 mod models;
 use models::Rucksack;
 
-fn main() {}
+fn main() -> std::io::Result<()> {
+  let rucksacks = advent::read_input_for_day_as::<Rucksack>(3)?;
+  let sum: usize = rucksacks.iter().map(|s| s.priority()).sum();
+
+  println!("[day-3][part-1] the sum of all item priorities is {}", sum);
+  Ok(())
+}
 
 #[cfg(test)]
 mod tests {
