@@ -1,5 +1,5 @@
 mod models;
-use models::Rucksack;
+use models::{Groups, Rucksack};
 
 fn main() -> std::io::Result<()> {
   let rucksacks = advent::read_input_for_day_as::<Rucksack>(3)?;
@@ -32,6 +32,14 @@ mod tests {
     let rucksacks = get_rucksacks();
     let sum: usize = rucksacks.iter().map(|s| s.priority()).sum();
     assert_eq!(sum, 157);
+  }
+
+  #[test]
+  fn day_three_part_two() {
+    let rucksacks = get_rucksacks();
+    let groups = Groups::from(rucksacks);
+
+    assert_eq!(groups.priority(), 70);
   }
 
   #[test]
