@@ -12,6 +12,10 @@ impl Pair {
   pub fn has_contained_pair(&self) -> bool {
     self.first.contains(&self.second) || self.second.contains(&self.first)
   }
+
+  pub fn has_overlapping_pair(&self) -> bool {
+    self.first.overlaps_with(&self.second)
+  }
 }
 
 impl FromStr for Pair {
@@ -51,5 +55,15 @@ impl Assignment {
 
   pub fn contains(&self, other: &Assignment) -> bool {
     self.from <= other.from && self.to >= other.to
+  }
+
+  pub fn overlaps_with(&self, other: &Assignment) -> bool {
+    let s_range = self.from..=self.to;
+    let o_range = other.from..=other.to;
+
+    s_range.contains(&other.from)
+      || s_range.contains(&other.to)
+      || o_range.contains(&self.from)
+      || o_range.contains(&self.to)
   }
 }

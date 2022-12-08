@@ -9,9 +9,20 @@ fn main() -> std::io::Result<()> {
     .collect::<Vec<&Pair>>()
     .len();
 
+  let part_2 = pairs
+    .iter()
+    .filter(|p| p.has_overlapping_pair())
+    .collect::<Vec<&Pair>>()
+    .len();
+
   println!(
     "[day-4][part-1] there are {} pairs with assignments that fully overlap.",
     part_1
+  );
+
+  println!(
+    "[day-4][part-2] there are {} pairs that overlap at all.",
+    part_2
   );
 
   Ok(())
@@ -43,5 +54,17 @@ mod tests {
       .len();
 
     assert_eq!(n, 2);
+  }
+
+  #[test]
+  fn day_4_part_2() {
+    let pairs = get_pairs();
+    let n = pairs
+      .iter()
+      .filter(|p| p.has_overlapping_pair())
+      .collect::<Vec<&Pair>>()
+      .len();
+
+    assert_eq!(n, 4);
   }
 }
