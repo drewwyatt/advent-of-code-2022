@@ -4,8 +4,13 @@ use models::{Groups, Rucksack};
 fn main() -> std::io::Result<()> {
   let rucksacks = advent::read_input_for_day_as::<Rucksack>(3)?;
   let sum: usize = rucksacks.iter().map(|s| s.priority()).sum();
+  let groups = Groups::from(rucksacks);
 
   println!("[day-3][part-1] the sum of all item priorities is {}", sum);
+  println!(
+    "[day-3][part-2] the sum of all item priorities is {}",
+    groups.priority()
+  );
   Ok(())
 }
 
