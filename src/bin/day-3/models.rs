@@ -59,9 +59,9 @@ impl Group {
 
   pub fn add(&mut self, rucksack: Rucksack) {
     if self.two.is_some() {
-      self.two = Some(rucksack)
-    } else {
       self.three = Some(rucksack)
+    } else {
+      self.two = Some(rucksack)
     }
   }
 
@@ -96,22 +96,25 @@ impl Rucksack {
   pub fn new(items: String) -> Self {
     let halfway = items.len() / 2;
     let mut both = None;
-    let parsed = items.chars().enumerate().fold(vec![], |mut acc, (idx, c)| {
-      if idx < halfway {
-        acc.push(Item::new(c));
-      } else {
-        let item = Item::new(c);
-        if acc.contains(&item) {
-          both = Some(item);
+    let (left, right) = items
+      .chars()
+      .enumerate()
+      .fold((vec![], vec![]), |mut acc, (idx, c)| {
+        if idx < halfway {
+          acc.0.push(Item::new(c));
+        } else {
+          let item = Item::new(c);
+          acc.1.push(item);
+          if acc.0.contains(&item) {
+            both = Some(item);
+          }
         }
-        acc.push(item);
-      }
+        return acc;
+      });
 
-      return acc;
-    });
-
+    let concatenated = [&left[..], &right[..]].concat();
     Self {
-      items: parsed,
+      items: concatenated,
       both,
     }
   }
