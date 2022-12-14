@@ -1,13 +1,14 @@
+use regex::Regex;
 use std::str::FromStr;
-use regex:Regex;
 
 #[derive(Debug)]
 pub enum AdventError {
-  UnrecognizedInputLine
+  UnrecognizedInputLine,
 }
 
 lazy_static! {
-  static ref REARRANGE_STEP: Regex = Regex::new(r"^move (?<number>\d+) from (?<origin>\d+) to (?<destination>\d+)$").unwrap();
+  static ref REARRANGE_STEP: Regex =
+    Regex::new(r"^move (?<number>\d+) from (?<origin>\d+) to (?<destination>\d+)$").unwrap();
 }
 
 pub struct Crane {
@@ -25,9 +26,7 @@ impl FromStr for Crane {
       }?;
     }
 
-    Ok(Self {
-      stacks: vec![],
-    })
+    Ok(Self { stacks: vec![] })
   }
 }
 
