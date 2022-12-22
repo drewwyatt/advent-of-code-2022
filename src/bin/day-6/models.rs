@@ -37,7 +37,15 @@ pub enum AdventError {
 }
 
 pub fn find_start_of_packet_marker(s: &str) -> Result<usize, AdventError> {
-  let mut buffer = BoundedVec::new(4);
+  find_marker_start(4, s)
+}
+
+pub fn find_start_of_message_marker(s: &str) -> Result<usize, AdventError> {
+  find_marker_start(14, s)
+}
+
+fn find_marker_start(buffer_size: usize, s: &str) -> Result<usize, AdventError> {
+  let mut buffer = BoundedVec::new(buffer_size);
   let mut result = Err(AdventError::CouldNotFindPacketMarker);
 
   for (index, el) in s.chars().into_iter().enumerate() {
